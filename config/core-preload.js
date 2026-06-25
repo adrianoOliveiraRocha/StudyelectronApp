@@ -1,4 +1,5 @@
-const { contextBridge } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
+
 
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
@@ -13,5 +14,15 @@ contextBridge.exposeInMainWorld('corepreloads', {
 
   secondCoreFunction: () => {
     return "BNB can be good to me"
+  },
+
+  ping: () => {
+    ipcRenderer.invoke('ping');
+  }
+})
+
+contextBridge.exposeInMainWorld('userPreloads', {
+  getUsers: () => {
+    return "This is a test";
   }
 })
