@@ -7,7 +7,8 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, './config/core-preload.js')
-    }
+    },
+    // titleBarStyle: 'hidden'
   });
 
   win.loadFile('./app/views/index.html');

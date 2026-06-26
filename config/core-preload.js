@@ -16,9 +16,8 @@ contextBridge.exposeInMainWorld('corepreloads', {
     return "BNB can be good to me"
   },
 
-  ping: () => {
-    ipcRenderer.invoke('ping');
-  }
+  ping: () => ipcRenderer.invoke('ping')
+
 })
 
 contextBridge.exposeInMainWorld('userPreloads', {
