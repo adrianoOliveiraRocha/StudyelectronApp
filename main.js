@@ -1,5 +1,6 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, Menu} = require('electron');
 const path = require('node:path');
+const template = require('./config/menu.js');
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -17,6 +18,8 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
 
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
   ipcMain.handle('ping', () => {
     return 'pong';
   })
