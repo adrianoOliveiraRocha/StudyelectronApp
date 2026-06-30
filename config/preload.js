@@ -24,4 +24,4 @@ contextBridge.exposeInMainWorld('userPreloads', {
   getUsers: () => {
     return "This is a test";
   }
-})
+});
