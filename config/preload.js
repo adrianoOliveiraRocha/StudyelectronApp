@@ -21,7 +21,5 @@ contextBridge.exposeInMainWorld('corepreloads', {
 })
 
 contextBridge.exposeInMainWorld('userPreloads', {
-  getUsers: () => {
-    return "This is a test";
-  }
+  db_getUsers: () => ipcRenderer.invoke('db:getUsers')
 });

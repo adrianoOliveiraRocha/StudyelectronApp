@@ -1,6 +1,17 @@
 const {app, BrowserWindow, ipcMain, Menu} = require('electron');
 const path = require('node:path');
-const CustomMenu = require('./config/custom-menu.js');
+const Database = require('./app/db/database.js');
+
+
+//<DB>
+ipcMain.handle('db:getUsers', async () => {
+  try {
+    return Database.getUsers();
+  } catch (error) {
+    console.error('Error in db:getUsers:', error);
+    return [];
+  }
+});
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -12,15 +23,13 @@ const createWindow = () => {
     // titleBarStyle: 'hidden'
   });
 
-  win.loadFile('./app/views/index.html');
+  win.loadFile('./app/views/core/index.html');
+  win.setMenuBarVisibility(false);
 
 }
 
 app.whenReady().then(() => {
 
-  const menu = Menu.buildFromTemplate(CustomMenu.getTemplate());
-  Menu.setApplicationMenu(menu);
-  
   ipcMain.handle('ping', () => {
     return 'pong';
   })
