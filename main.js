@@ -2,17 +2,6 @@ const {app, BrowserWindow, ipcMain, Menu} = require('electron');
 const path = require('node:path');
 const Database = require('./app/db/database.js');
 
-
-//<DB>
-ipcMain.handle('db:getUsers', async () => {
-  try {
-    return Database.getUsers();
-  } catch (error) {
-    console.error('Error in db:getUsers:', error);
-    return [];
-  }
-});
-
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
@@ -23,7 +12,7 @@ const createWindow = () => {
     // titleBarStyle: 'hidden'
   });
 
-  win.loadFile('./app/views/core/index.html');
+  win.loadFile('./app/views/core/index2.html');
   win.setMenuBarVisibility(false);
 
 }
