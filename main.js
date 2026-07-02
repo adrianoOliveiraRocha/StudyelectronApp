@@ -12,7 +12,7 @@ const createWindow = () => {
     // titleBarStyle: 'hidden'
   });
 
-  win.loadFile('./app/views/core/index2.html');
+  win.loadFile('./app/views/core/index.html');
   win.setMenuBarVisibility(false);
 
 }
