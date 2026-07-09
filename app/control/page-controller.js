@@ -1,4 +1,5 @@
-// ============ PAGE CONTROLLER ============
+'use strict'
+
 class PageController {
   constructor() {
     this.pages = {
@@ -74,6 +75,28 @@ class PageController {
             document.getElementById('aboutMessage').innerHTML = 
               '<div class="alert alert-success">About button clicked!</div>';
           });
+        }
+      },
+
+      otherPage: {
+        title: 'otherPage',
+        content: `
+          <hr>
+            <div class="card">
+            <div class="card-body">
+              <h3>My new Page</h3>
+              <p>This is a enaough to create my pages</p>
+              <button id="otherButton" class="btn btn-info">Defining the action</button>
+              <div id="otherMessage"></div>
+            </div>
+          </div>
+          </hr>
+        `,
+        onLoad: function() {
+          document.getElementById('otherButton')?.addEventListener('click', () => {
+            document.getElementById('otherMessage').innerHTML = 
+              '<div class="alert alert-success">My new Message</div>'
+          })
         }
       }
     };

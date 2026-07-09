@@ -1,4 +1,5 @@
-// ============ CORE CONTROLLER ============
+'use strict'
+
 const CoreController = {
   // Your existing methods
   isItLoged: function() {
