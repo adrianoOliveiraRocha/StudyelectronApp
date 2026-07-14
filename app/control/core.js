@@ -1,36 +1,43 @@
-'use strict'
-
-const CoreController = {
-  // Your existing methods
-  isItLoged: function() {
-    console.log('Checking login status...');
-    // Your logic
-  },
+(function(global) {
+  // Private variables
+  let isLoggedIn = false;
+  let currentUser = null;
   
-  login: function(email) {
-    console.log(`Login attempt for: ${email}`);
-    // Your login logic
-    const message = document.getElementById('loginMessage');
-    if (message) {
-      message.innerHTML = `<div class="alert alert-info">Logging in: ${email}</div>`;
-    }
+  // Public API
+  const CoreController = {
+    isItLoged: function() {
+      console.log('Checking login status...');
+      return isLoggedIn;
+    },
     
-    // Call Electron IPC
-    if (window.electronAPI) {
-      window.electronAPI.login(email).then(result => {
-        if (message) {
-          message.innerHTML = `<div class="alert alert-success">${result}</div>`;
-        }
-      });
+    login: function(email, password) {
+      console.log(`Login attempt: ${email}`);
+      // Simple validation
+      if (email && password && password.length >= 3) {
+        isLoggedIn = true;
+        currentUser = { email: email, name: email.split('@')[0] };
+        return { success: true, message: `Welcome ${currentUser.name}!` };
+      }
+      return { success: false, message: 'Invalid credentials. Password must be at least 3 characters.' };
+    },
+    
+    logout: function() {
+      isLoggedIn = false;
+      currentUser = null;
+      console.log('Logged out');
+      return { success: true, message: 'Logged out successfully' };
+    },
+    
+    getCurrentUser: function() {
+      return currentUser;
+    },
+    
+    onPageLoad: function(pageName) {
+      console.log(`Page loaded: ${pageName}`);
     }
-  },
+  };
   
-  // Called when page loads
-  onPageLoad: function(pageName) {
-    console.log(`Page loaded: ${pageName}`);
-    // Your page load logic
-  }
-};
-
-// Make it globally available
-window.CoreController = CoreController;
+  // Expose to global
+  global.CoreController = CoreController;
+  
+})(window);

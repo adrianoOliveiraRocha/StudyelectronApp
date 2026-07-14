@@ -3,23 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="./../../assets/css/bootstrap.min.css">
-    <title>StudyAPP</title>
+    <title>Study APP</title>
   </head>
   <body>
-    <!-- Navigation -->
     <nav class="navbar navbar-expand-sm bg-light navbar-light">
       <div class="container-fluid">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link active" data-page="home" href="#">Home</a>
           </li>
-          <!-- <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" data-page="login" href="#">Login</a>
-          </li> -->
+          </li>
           <li class="nav-item">
             <a class="nav-link" data-page="about" href="#">About</a>
           </li>
-          
         </ul>
       </div>
     </nav>
@@ -32,13 +30,39 @@
     <script src="./../../control/page-controller.js"></script>
     
     <script>
-      // ============ INITIALIZATION ============
+      // Wait for DOM to be ready
       document.addEventListener('DOMContentLoaded', function() {
-        // Add click listeners to nav links
+        console.log('DOM loaded, initializing app...');
+        
+        // Check if pageController is available
+        if (typeof pageController === 'undefined') {
+          console.error('pageController not loaded!');
+          return;
+        }
+        
+        // Navigation click handlers
         document.querySelectorAll('.nav-link').forEach(link => {
           link.addEventListener('click', function(e) {
             e.preventDefault();
             const page = this.dataset.page;
+            
+            console.log(`Navigation clicked: ${page}`);
+            
+            // Handle logout specially
+            if (page === 'logout') {
+              const result = CoreController.logout();
+              if (result.success) {
+                // Update nav
+                const loginLink = document.querySelector('.nav-link[data-page="logout"]');
+                if (loginLink) {
+                  loginLink.textContent = 'Login';
+                  loginLink.dataset.page = 'login';
+                }
+                pageController.loadPage('home');
+              }
+              return;
+            }
+            
             if (page) {
               pageController.loadPage(page);
             }
@@ -47,6 +71,16 @@
         
         // Load default page
         pageController.loadPage('home');
+        
+        // Check login status on startup
+        const isLoggedIn = CoreController.isItLoged();
+        if (isLoggedIn) {
+          const loginLink = document.querySelector('.nav-link[data-page="login"]');
+          if (loginLink) {
+            loginLink.textContent = 'Logout';
+            loginLink.dataset.page = 'logout';
+          }
+        }
       });
     </script>
   </body>
