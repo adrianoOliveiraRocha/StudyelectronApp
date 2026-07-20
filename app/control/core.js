@@ -13,12 +13,12 @@
     login: function(email, password) {
       console.log(`Login attempt: ${email}`);
       // Simple validation
-      if (email && password && password.length >= 3) {
+      if (email && password) {
         isLoggedIn = true;
         currentUser = { email: email, name: email.split('@')[0] };
         return { success: true, message: `Welcome ${currentUser.name}!` };
       }
-      return { success: false, message: 'Invalid credentials. Password must be at least 3 characters.' };
+      return { success: false, message: 'Invalid credentials. Type the credentials correctly please!'};
     },
     
     logout: function() {
