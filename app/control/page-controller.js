@@ -67,7 +67,7 @@
               const email = document.getElementById('loginEmail').value;
               const password = document.getElementById('loginPassword').value;
               
-              const result = await global.CoreController.login(email, password);
+              const result = global.CoreController.login(email, password);
               const messageDiv = document.getElementById('loginMessage');
               
               if (result.success) {
