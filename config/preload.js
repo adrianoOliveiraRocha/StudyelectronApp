@@ -20,6 +20,7 @@ contextBridge.exposeInMainWorld('corepreloads', {
 
 })
 
-contextBridge.exposeInMainWorld('userPreloads', {
+contextBridge.exposeInMainWorld('userPreload', {
+  db_getUser: (email, pwd) => ipcRenderer.invoke('db:getUser'),
   db_getUsers: () => ipcRenderer.invoke('db:getUsers')
 });

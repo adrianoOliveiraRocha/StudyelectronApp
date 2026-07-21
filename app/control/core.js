@@ -10,15 +10,26 @@
       return isLoggedIn;
     },
     
-    login: function(email, password) {
-      console.log(`Login attempt: ${email}`);
-      // Simple validation
+    login: async function(email, pwd) {
+      try {
+        if(email && pwd) {
+          const user = await window.userPreload.db_getUser(email, pwd);
+        } else {
+          return {success: false, message: 'Invalid credentials. Type the credentials correctly please!'};
+        }
+      } catch (error) {
+        console.log(`Error in core.js / login: ${error}`)
+      }
       if (email && password) {
         isLoggedIn = true;
         currentUser = { email: email, name: email.split('@')[0] };
-        return { success: true, message: `Welcome ${currentUser.name}!` };
+        return { 
+          success: true, 
+          message: `Welcome ${currentUser.name}!`,
+          currentUser
+        };
       }
-      return { success: false, message: 'Invalid credentials. Type the credentials correctly please!'};
+      
     },
     
     logout: function() {

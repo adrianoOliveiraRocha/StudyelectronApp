@@ -2,6 +2,18 @@ const {app, BrowserWindow, ipcMain, Menu} = require('electron');
 const path = require('node:path');
 const Database = require('./app/db/database.js');
 
+// <DB>
+ipcMain.handle('db:getUser', async (event, email, pwd) => {
+  try {
+    return Database.getUser(email, pwd);
+  } catch (error) {
+    return `
+    main.js; line: 10 
+    ${error}`;
+  }
+})
+// </DB>
+
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,

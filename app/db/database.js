@@ -31,7 +31,7 @@ const Database = {
       const user = await this.query(sql, [email, pwd]);
       return user;
     } catch (error) {
-      console.error(`db-connect.js: ${error}`);
+      console.error(`database.js, line: 34: ${error}`);
     }
     
   }

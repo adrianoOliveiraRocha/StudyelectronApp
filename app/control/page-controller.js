@@ -67,10 +67,11 @@
               const email = document.getElementById('loginEmail').value;
               const password = document.getElementById('loginPassword').value;
               
-              const result = global.CoreController.login(email, password);
+              const result = await global.CoreController.login(email, password);
               const messageDiv = document.getElementById('loginMessage');
               
               if (result.success) {
+                console.log(result)
                 messageDiv.innerHTML = 
                   `<div class="alert alert-success">${result.message}</div>`;
                 // Update nav to show logged in state
