@@ -28,8 +28,12 @@ const Database = {
   async getUser(email, pwd) {
     try {
       const sql = `select * from user where email = ? and pwd = ?;`;
-      const user = await this.query(sql, [email, pwd]);
-      return user;
+      const result = await this.query(sql, [email, pwd]);
+      if(result.length == 1) {
+        return {success: true, user: result[0]};
+      } else {
+        return {success: false, user: null, message: "User not found!"};
+      }
     } catch (error) {
       console.error(`database.js, line: 34: ${error}`);
     }

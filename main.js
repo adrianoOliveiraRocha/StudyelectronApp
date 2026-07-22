@@ -4,6 +4,7 @@ const Database = require('./app/db/database.js');
 
 // <DB>
 ipcMain.handle('db:getUser', async (event, email, pwd) => {
+  // console.log(`main:db:getUser; email: ${email}; pwd: ${pwd}`);
   try {
     return Database.getUser(email, pwd);
   } catch (error) {

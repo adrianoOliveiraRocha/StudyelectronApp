@@ -50,8 +50,8 @@
                     <input type="email" class="form-control" id="loginEmail" placeholder="Enter email">
                   </div>
                   <div class="mb-3">
-                    <label for="loginPassword" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="loginPassword" placeholder="Enter password">
+                    <label for="pwd" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="pwd" placeholder="Enter password">
                   </div>
                   <button type="submit" class="btn btn-primary">Login</button>
                   <button type="button" id="backHomeFromLoginBtn" class="btn btn-secondary">Back Home</button>
@@ -65,21 +65,42 @@
             document.getElementById('loginForm')?.addEventListener('submit', (e) => {
               e.preventDefault();
               const email = document.getElementById('loginEmail').value;
-              const password = document.getElementById('loginPassword').value;
-              
-              const result = global.CoreController.login(email, password);
+              const pwd = document.getElementById('pwd').value;
               const messageDiv = document.getElementById('loginMessage');
+
+              global.CoreController.login(email, pwd)
+                .then(result => {
+                  if (result.success) {
+                    console.log(result);
+                    messageDiv.innerHTML = 
+                      `<div class="alert alert-success">${result.message}</div>`;
+                    // Update nav to show logged in state
+                    updateNavAfterLogin(true);
+                  } else {
+                    console.log(result);
+                    messageDiv.innerHTML = 
+                      `<div class="alert alert-danger">${result.message}</div>`;
+                  }
+                })
+                .catch(error => {
+                  console.error('Login error:', error);
+                  messageDiv.innerHTML = 
+                    `<div class="alert alert-danger">An error occurred during login</div>`;
+                })
               
-              if (result.success) {
-                console.log(result)
-                messageDiv.innerHTML = 
-                  `<div class="alert alert-success">${result.message}</div>`;
-                // Update nav to show logged in state
-                updateNavAfterLogin(true);
-              } else {
-                messageDiv.innerHTML = 
-                  `<div class="alert alert-danger">${result.message}</div>`;
-              }
+              
+              // if (result.success) {
+              //   console.log(result)
+              //   messageDiv.innerHTML = 
+              //     `<div class="alert alert-success">${result.message}</div>`;
+              //   // Update nav to show logged in state
+              //   updateNavAfterLogin(true);
+              // } else {
+              //   console.log(result)
+              //   messageDiv.innerHTML = 
+              //     `<div class="alert alert-danger">${result.message}</div>`;
+              // }
+              
             });
             
             document.getElementById('backHomeFromLoginBtn')?.addEventListener('click', () => {
