@@ -70,14 +70,17 @@
 
               global.CoreController.login(email, pwd)
                 .then(result => {
+                  console.log(result);
                   if (result.success) {
-                    console.log(result);
                     messageDiv.innerHTML = 
-                      `<div class="alert alert-success">${result.message}</div>`;
+                      `
+                      <div class="alert alert-success">${result.message}</div>
+                      </h>
+                      <div class="alert alert-success">${result.user.email}</div>                        
+                      `;
                     // Update nav to show logged in state
                     updateNavAfterLogin(true);
                   } else {
-                    console.log(result);
                     messageDiv.innerHTML = 
                       `<div class="alert alert-danger">${result.message}</div>`;
                   }
@@ -85,22 +88,8 @@
                 .catch(error => {
                   console.error('Login error:', error);
                   messageDiv.innerHTML = 
-                    `<div class="alert alert-danger">An error occurred during login</div>`;
-                })
-              
-              
-              // if (result.success) {
-              //   console.log(result)
-              //   messageDiv.innerHTML = 
-              //     `<div class="alert alert-success">${result.message}</div>`;
-              //   // Update nav to show logged in state
-              //   updateNavAfterLogin(true);
-              // } else {
-              //   console.log(result)
-              //   messageDiv.innerHTML = 
-              //     `<div class="alert alert-danger">${result.message}</div>`;
-              // }
-              
+                    `<div class="alert alert-danger">An error occurred during login: ${error}</div>`;
+                })              
             });
             
             document.getElementById('backHomeFromLoginBtn')?.addEventListener('click', () => {

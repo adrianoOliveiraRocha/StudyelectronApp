@@ -21,7 +21,7 @@ const Database = {
       return users;
     } catch (error) {
       console.error('Error fetching users from DB:', error);
-      return [];
+      return error;
     }
   },
 
@@ -29,13 +29,10 @@ const Database = {
     try {
       const sql = `select * from user where email = ? and pwd = ?;`;
       const result = await this.query(sql, [email, pwd]);
-      if(result.length == 1) {
-        return {success: true, user: result[0]};
-      } else {
-        return {success: false, user: null, message: "User not found!"};
-      }
+      return result;
     } catch (error) {
       console.error(`database.js, line: 34: ${error}`);
+      return error;
     }
     
   }

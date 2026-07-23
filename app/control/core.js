@@ -13,13 +13,16 @@
     login: async function(email, pwd) {
       try {
         if(email && pwd) {
-          // console.log(`core:login; email: ${email}; pwd: ${pwd}`);
-          const user = await window.userPreload.db_getUser(email, pwd);
-        } else {
-          return {success: false, message: 'Invalid credentials. Type the credentials correctly please!'};
-        }
+          let result = await window.userPreload.db_getUser(email, pwd);
+          if(result.length) {
+            return {success: true, message: 'Ok', user: result[0]};
+          } else {
+            return {success: false, message: 'Invalid credentials. Type the credentials correctly please!', user: null}
+          }          
+        } 
       } catch (error) {
-        console.log(`Error in core.js / login: ${error}`)
+        console.log(error);
+        return {success: false, message: 'Error', error};
       }      
     },
     
